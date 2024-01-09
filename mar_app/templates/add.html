@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>Add an Anime</title>
+<!-- Bootstrap core CSS -->
+<!-- Additional CSS Files -->
+{% load static %}
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-lugx-gaming.css'%}">
+    <link rel="stylesheet" href="{% static 'css/owl.css'%}">
+    <link rel="stylesheet" href="{% static 'css/animate.css'%}">
+    <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
+</head>
+<body style="background-color: rgb(36, 60, 116);">
+<!-- ***** Preloader Start ***** -->
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    </div>
+</div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="/success" class="logo">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/020/396/961/small/mar-letter-logo-design-in-illustration-logo-calligraphy-designs-for-logo-poster-invitation-etc-vector.jpg" alt="logo" style="width: 100px;height: 100px;">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="/success" class="active">Home</a></li>
+                        <li><a href="/go_to_add">Add Anime</a></li>
+                        <li><a href="product-details.html">Our Shop</a></li>
+                        <li><a href="/load_contact_us_page">Contact Us</a></li>
+                        <li><a href="/logout">Sign Out</a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+  <!-- ***** Header Area End ***** -->
+
+<div class="page-heading header-text">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Add Your Series</h3>
+            <span class="breadcrumb"><a href="/success">Home</a>  >  <a href="/go_to_add">Add</a> 
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="single-product section">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="left-image">
+                <img src="https://i2.wp.com/i.imgur.com/C4EKjFB.jpg" alt="anime-image">
+            </div>
+        </div>
+        <div class="col-lg-6 align-self-center">
+            <h4>Add the details</h4>
+            <form id="contact-form" action="/add_new_anime" method="POST">
+                {%csrf_token%}
+                <div class="row">
+                <div class="col-lg-12">
+                <fieldset>
+                    <input style="width: 300px;margin: 1rem;" type="text" name="title" id="name" placeholder="Title...">
+                </fieldset>
+                </div>
+                <div class="col-lg-6">
+                <fieldset>
+                    <input style="width: 150px;margin: 1rem;" type="number" name="year" id="surname" placeholder="Release Year...">
+                </fieldset>
+                </div>
+                <div class="col-lg-6">
+                <fieldset>
+                    <input style="width: 150px;margin: 1rem;" type="text" name="ylink" id="ylink" placeholder="Trailer Link..." >
+                </fieldset>
+                </div>
+                <div class="col-lg-12">
+                    <fieldset>
+                        <input style="width: 300px;margin: 1rem;" type="text" name="ilink" id="name" placeholder="Image Link...">
+                    </fieldset>
+                    </div>
+                <div class="col-lg-12">
+                <fieldset>
+                    <textarea style="margin: 1rem;width: 300px;height: 200px;" name="desc" id="message" placeholder="Anime Description"></textarea>
+                </fieldset>
+                </div>
+                <div class="col-lg-12">
+                <fieldset>
+                    <button style="margin: 1rem;" type="submit" id="form-submit" class="orange-button">Post!</button>
+                </fieldset>
+                </div>
+            </div>
+            </form>
+            <div style="margin-left: 4rem;">
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-12">
+        <div class="sep"></div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-lg-12">
+            <p>Copyright © 2024 MAR. All rights reserved. &nbsp;&nbsp; <a rel="nofollow" target="_blank"></a></p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+{% load static%}
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/isotope.min.js'%}"></script>
+<script src="{% static 'js/owl-carousel.js'%}"></script>
+<script src="{% static 'js/counter.js'%}"></script>
+<script src="{% static 'js/custom.js'%}"></script>
+</body>
+</html>
