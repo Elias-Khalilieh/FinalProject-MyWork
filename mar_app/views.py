@@ -14,7 +14,7 @@ def display_home(request):
         context={
             'user_in':User.objects.get(id=request.session['id']),
             'allanimes':Anime.objects.all(),
-            # 'top_events' : Anime.objects.all().annotate(num_comments=Count('event_comments')).order_by('-num_comments')[:3],
+            'top_animes' : Anime.objects.all().annotate(num_revs=Count('reviews')).order_by('-num_revs')[:3],
         }
         return render(request,'mpage.html',context)
     
@@ -24,7 +24,7 @@ def new_sign_up(request):
     errors = User.objects.basic_validator(request.POST)
     if len(errors) > 0:
         for key, value in errors.items():
-            messages.error(request, value)
+            messages.error(request,value,extra_tags=key)
         return redirect('/')
     else:
         ## Taking the password and hashing it directly:
@@ -47,7 +47,7 @@ def new_sign_in(request):
         errors = User.objects.login_validator(request.POST)
         if len(errors) > 0:
             for key, value in errors.items():
-                messages.error(request, value)
+                messages.error(request, value, extra_tags=key)
             return redirect('/')
         else:
             user=User.objects.filter(email_address=request.POST['useremail'])
@@ -81,7 +81,7 @@ def create_anime(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value)
-            return redirect('/add_an_event')
+            return redirect('/add_new_anime')
         else: 
             user_id=request.session['id']
             anime1=Anime.new_anime(title=request.POST['title'],
@@ -117,9 +117,53 @@ def postrev(request,anid):
         showed_anime = Anime.objects.get(id = int(anid))
         review1 = Reviews.new_rev(anime=showed_anime,rating=request.POST['rating'],content=request.POST['content'],created_by=logged_user)
         # messages.success = 'Review Posted'
-        print(review1)
+        
         context = {
-            'review1': review1
+            'oneanime':Anime.one_anime(anid),
+            # 'revs': showed_anime.reviews.all(),
         }
-        print(review1)
+        
         return render(request,'partial.html',context)
+    
+def deleteonerev(request,reviewid,oneanimeid):
+    Reviews.delete_rev(reviewid)
+    return redirect('/animes/'+str(oneanimeid))
+
+def delthisan(request,anid):
+    Anime.delete_anime(anid)
+    return redirect("/success")
+
+def show_edit(request,anid):
+    if 'id' not in request.session:
+        return redirect('/')
+    else:
+        context = {
+                'oneanime':Anime.one_anime(anid),
+                'oneuser':User.user_in_account(request.session['id'])
+            }
+        return render(request,'epage.html',context)
+    
+def edit_anime(request,oneanimeid):
+    if 'id' not in request.session:
+        return redirect('/')
+    else:
+        errors = Anime.objects.anime_basic_validator(request.POST)
+    if len(errors) > 0:
+        for key,value in errors.items():
+            messages.error(request, value)
+        return redirect ('/event/'+str(oneanimeid)+'/edit')
+    Anime.update_one(oneanimeid,request.POST['title'],request.POST['desc'],request.POST['year'],request.POST['ylink'],request.POST['ilink'])
+    return redirect ('/success')
+
+
+def favorite_this(request,anid):
+    Anime.fav_add_one(request.session['id'],anid)
+    return redirect("/success")
+
+def unfavorite_this(request,anid):
+    Anime.unfav_rem_one(request.session['id'],anid)
+    return redirect("/success")
+
+
+def display_shop(request):
+    return render(request,'shop.html')

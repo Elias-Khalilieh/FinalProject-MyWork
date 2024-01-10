@@ -17,7 +17,7 @@
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
 </head>
-<body style="background-color: rgb(36, 60, 116);">
+<body  style="background-color: #2962ff;">
 <!-- ***** Preloader Start ***** -->
 <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -39,14 +39,14 @@
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
                     <a href="/success" class="logo">
-                        <img src="https://static.vecteezy.com/system/resources/thumbnails/020/396/961/small/mar-letter-logo-design-in-illustration-logo-calligraphy-designs-for-logo-poster-invitation-etc-vector.jpg" alt="logo" style="width: 100px;height: 100px;">
+                        <img src="https://i.pinimg.com/736x/fc/36/96/fc3696a3ce80087f3493e6e109bd5a03.jpg" alt="logo" style="width: 100px;height: 100px;">
                     </a>
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
                         <li><a href="/success" class="active">Home</a></li>
                         <li><a href="/go_to_add">Add Anime</a></li>
-                        <li><a href="product-details.html">Our Shop</a></li>
+                        <li><a href="/load_shop">Our Shop</a></li>
                         <li><a href="/load_contact_us_page">Contact Us</a></li>
                         <li><a href="/logout">Sign Out</a></li>
                     </ul>   
@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<div class="single-product section">
+<div class="single-product section" >
     <div class="container">
     <div class="row">
         <div class="col-lg-6">
@@ -90,6 +90,9 @@
                 <div class="col-lg-6">
                 <fieldset>
                     <h4>Release-Year: {{oneanime.year}}</h4>
+                    {% if oneanime.get_rating > 0 %}
+                        <h3 style="color: yellow;">Rating: {{ oneanime.get_rating }} / 6</h3>
+                    {% endif %}
                 </fieldset>
                 </div>
                 <div>
@@ -97,7 +100,7 @@
                 </div>
                 <div>
                     <h5 style="color: brown;margin-top: 2rem;">Watch The Trailer!</h5>
-                    <iframe style="margin: 2rem;" width="800" height="500" src="https://www.youtube.com/embed/{{oneevent.link}}" allowfullscreen>
+                    <iframe width="800" height="600" src="https://www.youtube.com/embed/{{oneanime.link}}" allowfullscreen>
                     </iframe>
                 </div>
             </div>
@@ -110,7 +113,6 @@
         <div class="w-full mt-6"  style="margin-left: 2rem;">
             <h2 class="text-xl">Reviews</h2>
             {% if request.session.id %}
-            <div id="userMsg"></div>
                 <form class="mt-6 mb-6 p-6 bg-gray-100 rounded-xl" id="postcom" method="POST" action="/addrev/{{oneanime.id}}">
                     {% csrf_token %}
                     <div>
@@ -133,15 +135,19 @@
                     </div>
                 </form>
             {% endif %}
-            <div style="margin: 2rem;background-color: gray;width: 300px;">
+            <div id="userMsg" style="margin: 2rem;background-color: white;width: 600px;border-radius: 20%;">
             {% for review in oneanime.reviews.all %}
-                <div class="px-4 py-6 bg-white-100 rounded-xl mb-4">
+            <strong style="margin-left: 4rem;">Added by: {{review.created_by.user_name}}</strong><br>
+                <div style="width: 600px;background-color: white;border-radius: 20%; margin: 0 auto; text-align: center;">
                     <strong>Rating:</strong> {{ review.rating }}/6<br>
                     <strong>Date:</strong> {{ review.created_at|date:"Y-m-d" }}<br>
-                    <strong>Uploaded by:{{review.reviews.first_name}} </strong><br>
+                    
                     <strong>Comment:</strong><br>
                     {{ review.content }}
                 </div>
+                {% if review.created_by.id == request.session.id %}
+                    <a style="margin-left: 30rem;color: red; border: 2px solid black;background-color: yellow;" href="/review/delete/{{review.id}}/{{oneanime.id}}">Delete</a>
+                {%endif%}
             {% endfor %}
             </div>
         </div>
@@ -168,7 +174,7 @@
 <script src="{% static 'js/counter.js'%}"></script>
 <script src="{% static 'js/custom.js'%}"></script>
 
-<script type="text/JavaScript">
+<!-- <script type="text/JavaScript">
     $('#postcom').submit(function() {
         $.ajax({
             type:'POST',
@@ -181,6 +187,25 @@
         })
         return false;
     });
-</script>
+</script> -->
+
+
+<script>
+    $('#postcom').submit(function(e){
+        e.preventDefault()
+        $.ajax({
+        url: $(this).attr('action'),
+        method: 'post',
+        data: $(this).serialize(),
+        success: function(serverResponse){
+            console.log("Received this from server: ", serverResponse)
+            $('#userMsg').html(serverResponse)
+        }
+    })
+})
+    
+    
+    </script>
+
 </body>
 </html>

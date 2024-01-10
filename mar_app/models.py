@@ -51,9 +51,11 @@ class AnimeManager(models.Manager):
         errors = {}
         if len(postData['title']) < 5:
             errors['title']="Please :) Add a Title!."
-        if len(postData['desc'])<10:
+        if len(postData['desc']) < 10:
             errors['desc']="Description Must Be More Than 10 Characters."
-        if postData['year'] > '2023' :
+        if postData['year'] > '2023':
+            errors['year']="Please Enter a Valid Year"
+        if postData['year'] < '0':
             errors['year']="Please Enter a Valid Year"
         if len(postData['ylink']) < 5:
             errors['ylink']="Invalid YouTube Link !"
@@ -102,6 +104,7 @@ class Anime(models.Model):
         update1.desc=desc
         update1.year=year
         update1.link=link
+        update1.img_url=img_url
         update1.save()
         
     def delete_anime(id):
@@ -117,6 +120,17 @@ class Anime(models.Model):
         user1 = User.objects.get(id=int(userid))
         anime1 = Anime.objects.get(id=int(anid))
         anime1.user_that_fav.remove(user1)
+        
+    def get_rating(self):
+        reviews_total = 0
+
+        for review in self.reviews.all():
+            reviews_total += review.rating
+        
+        if reviews_total > 0:
+            return reviews_total / self.reviews.count()
+        
+        return 0
     
 class Reviews(models.Model):
     anime = models.ForeignKey(Anime, related_name='reviews', on_delete= models.CASCADE)
@@ -127,3 +141,7 @@ class Reviews(models.Model):
     
     def new_rev(anime,rating,content,created_by):
         Reviews.objects.create(anime=anime,rating=rating,content=content,created_by=created_by)
+        
+    def delete_rev(id):
+        rev1 = Reviews.objects.get(id=int(id))
+        rev1.delete()

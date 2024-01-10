@@ -26,43 +26,78 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        <label>First Name<span class="req">*</span> </label>
-                        <input type="text" class="form-control" id="first_name" name="fname" autocomplete="off">
+                        <label><span class="req"></span> </label>
+                        <input type="text" class="form-control" id="first_name" name="fname" autocomplete="off" placeholder="First Name *">
                         <p class="help-block text-danger"></p>
+                        {% for message in messages %}
+                        {%if message.extra_tags == 'fname'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                     <div class="form-group">
-                        <label> Last Name<span class="req">*</span> </label>
-                        <input type="text" class="form-control" id="last_name" name="lname" autocomplete="off">
+                        <label><span class="req"></span> </label>
+                        <input type="text" class="form-control" id="last_name" name="lname" autocomplete="off" placeholder="Last Name">
                         <p class="help-block text-danger"></p>
+                        {% for message in messages %}
+                        {%if message.extra_tags == 'lname'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Username<span class="req">*</span> </label>
-                    <input type="text" class="form-control" id="first_name" name="username" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="text" class="form-control" id="first_name" name="username" autocomplete="off" placeholder="Username*">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'username'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="form-group">
-                    <span class="req">Date of Birth *</span>
-                    <input type="date" class="form-control" name="bdate" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="date" class="form-control" name="bdate" autocomplete="off" placeholder="Birth Date *">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'bdate'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="form-group">
-                    <label> Your Email<span class="req">*</span> </label>
-                    <input type="email" class="form-control" id="email" name="useremail" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="email" class="form-control" id="email" name="useremail" autocomplete="off" placeholder="Email*">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'useremail'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="form-group">
-                    <label>Password<span class="req">*</span> </label>
-                    <input type="password" class="form-control" id="password" name="userpass" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="password" class="form-control" id="password" name="userpass" autocomplete="off" placeholder="Password*">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'userpass'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="form-group">
-                    <label> Confirm Password<span class="req">*</span> </label>
-                    <input type="password" class="form-control" id="password" name="confirmuserpass" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="password" class="form-control" id="password" name="confirmuserpass" autocomplete="off" placeholder="Confirm Password">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'confirmusername'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="mrgn-30-top">
                     <button type="submit" class="btn btn-larger btn-block">
@@ -76,14 +111,24 @@
                 <form id="login" action="/signin" method="POST">
                     {%csrf_token%}
                 <div class="form-group">
-                    <label> Your Email<span class="req">*</span> </label>
-                    <input type="email" class="form-control" id="email" name="useremail" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="email" class="form-control" id="email" name="useremail" autocomplete="off" placeholder="Email: ">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'useremail'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="form-group">
-                    <label> Password<span class="req">*</span> </label>
-                    <input type="password" class="form-control" id="password" name="userpass" autocomplete="off">
+                    <label><span class="req"></span> </label>
+                    <input type="password" class="form-control" id="password" name="userpass" autocomplete="off" placeholder="Password:">
                     <p class="help-block text-danger"></p>
+                    {% for message in messages %}
+                        {%if message.extra_tags == 'userpass'%}
+                        <li>{{ message }}</li>
+                        {%endif%}
+                        {% endfor %}
                 </div>
                 <div class="mrgn-30-top">
                     <button type="submit" class="btn btn-larger btn-block">
@@ -95,7 +140,7 @@
             </div>
         </div>
         </div>
-        <div style="margin-left: 4rem;">
+        <!-- <div style="margin-left: 4rem;">
             {% if messages %}
                 <ul>
                     {% for message in messages %}
@@ -103,7 +148,7 @@
                     {% endfor %}
                 </ul>
             {% endif %}
-        </div>
+        </div> -->
     </div>
     
     <!-- /.container --> 

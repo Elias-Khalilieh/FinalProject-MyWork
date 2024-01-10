@@ -12,5 +12,12 @@ urlpatterns = [
     path('go_to_add',views.display_add),
     path('add_new_anime',views.create_anime),
     path('animes/<int:anid>',views.show_anime),
-    path('addrev/<int:anid>',views.postrev)
+    path('addrev/<int:anid>',views.postrev),
+    path('review/delete/<int:reviewid>/<int:oneanimeid>',views.deleteonerev),
+    path('anime/<int:anid>/edit',views.show_edit),
+    path('anime/<int:anid>/delete',views.delthisan),
+    path('editanime/<int:oneanimeid>',views.edit_anime),
+    path('anime/<int:anid>/unfavorite',views.unfavorite_this),
+    path('anime/<int:anid>/favorite',views.favorite_this),
+    path('load_shop',views.display_shop)
 ]

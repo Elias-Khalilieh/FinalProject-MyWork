@@ -17,7 +17,7 @@
     <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
 </head>
-<body  style="background-color: #2962ff;; background-image: url('https://wallpapercave.com/wp/wp6084689.jpg');backface-visibility: hidden;size: 100%;background-repeat: no-repeat;background-position: 100%;">
+<body  style="background-color: #2962ff;">
 <!-- ***** Preloader Start ***** -->
 <div id="js-preloader" class="js-preloader">
     <div class="preloader-inner">
@@ -46,7 +46,7 @@
                     <ul class="nav">
                         <li><a href="/success" class="active">Home</a></li>
                         <li><a href="/go_to_add">Add Anime</a></li>
-                        <li><a href="/load_shop">Our Shop</a></li>
+                        <li><a href="product-details.html">Our Shop</a></li>
                         <li><a href="/load_contact_us_page">Contact Us</a></li>
                         <li><a href="/logout">Sign Out</a></li>
                     </ul>   
@@ -81,38 +81,38 @@
             </div>
         </div>
         <div class="col-lg-6 align-self-center">
-            <h4 style="color: white;">Add the details</h4>
-            <form id="contact-form" action="/add_new_anime" method="POST">
+            <h4>Add the details</h4>
+            <form id="contact-form" action="/editanime/{{oneanime.id}}" method="POST">
                 {%csrf_token%}
                 <div class="row">
                 <div class="col-lg-12">
                 <fieldset>
-                    <input style="width: 300px;margin: 1rem;" type="text" name="title" id="name" placeholder="Title...">
+                    <input style="width: 300px;margin: 1rem;" type="text" name="title" id="name" placeholder="Title..." value="{{oneanime.title}}">
                 </fieldset>
                 </div>
                 <div class="col-lg-6">
                 <fieldset>
-                    <input style="width: 150px;margin: 1rem;" type="number" name="year" id="surname" placeholder="Release Year...">
+                    <input style="width: 150px;margin: 1rem;" type="number" name="year" id="surname" placeholder="Release Year..." value="{{oneanime.year}}">
                 </fieldset>
                 </div>
                 <div class="col-lg-6">
                 <fieldset>
-                    <input style="width: 150px;margin: 1rem;" type="text" name="ylink" id="ylink" placeholder="Trailer Link..." >
+                    <input style="width: 150px;margin: 1rem;" type="text" name="ylink" id="ylink" placeholder="Trailer Link..." value="{{oneanime.link}}">
                 </fieldset>
                 </div>
                 <div class="col-lg-12">
                     <fieldset>
-                        <input style="width: 300px;margin: 1rem;" type="text" name="ilink" id="name" placeholder="Image Link...">
+                        <input style="width: 300px;margin: 1rem;" type="text" name="ilink" id="name" placeholder="Image Link..." value="{{oneanime.img_url}}">
                     </fieldset>
                     </div>
                 <div class="col-lg-12">
                 <fieldset>
-                    <textarea style="margin: 1rem;width: 300px;height: 200px;" name="desc" id="message" placeholder="Anime Description"></textarea>
+                    <textarea style="margin: 1rem;width: 300px;height: 200px;" name="desc" id="message" placeholder="Anime Description">{{oneanime.desc}}</textarea>
                 </fieldset>
                 </div>
                 <div class="col-lg-12">
                 <fieldset>
-                    <button style="margin: 1rem;" type="submit" id="form-submit" class="orange-button">Post!</button>
+                    <button style="margin: 1rem;" type="submit" id="form-submit" class="orange-button">Update!</button>
                 </fieldset>
                 </div>
             </div>
