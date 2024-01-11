@@ -62,6 +62,22 @@ class AnimeManager(models.Manager):
         if len(postData['ilink']) < 5:
             errors['ilink']="Invalid Image Link !"
         return errors
+    
+class CUserManager(models.Manager):
+    def c_basic_validator(self,postData):
+        errors = {}
+        if len(postData['cfname']) < 3:
+            errors['cfname']="Type Your Name!"
+        if len(postData['clname']) < 3:
+            errors['clname']="Type Your Last Name!"
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+        if not EMAIL_REGEX.match(postData['cemail']):      
+            errors['cemail'] = "Invalid email address!"
+        if len(postData['csubject'] ) < 5:
+            errors['csubject'] = "Type a Subject"
+        # if len(postData['cmessage']) < 10:
+        #     errors['cmessage']="Message Must Be More Than 10 Characters."
+        
 
 class User(models.Model):
     first_name = models.CharField(max_length=45)
@@ -145,3 +161,15 @@ class Reviews(models.Model):
     def delete_rev(id):
         rev1 = Reviews.objects.get(id=int(id))
         rev1.delete()
+        
+class CUser(models.Model):
+    c_fname = models.CharField(max_length=45)
+    c_lname = models.CharField(max_length=45)
+    c_email = models.EmailField()
+    c_subject = models.CharField(max_length=45)
+    c_message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    objects = CUserManager()
+    
+    def new_con(c_fname,c_lname,c_email,c_subject,c_message):
+        CUser.objects.create(c_fname=c_fname,c_lname=c_lname,c_email=c_email,c_subject=c_subject,c_message=c_message)

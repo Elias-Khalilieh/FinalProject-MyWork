@@ -103,8 +103,8 @@
                 <h4>{{an.title}}</h4>
                     {%if an.uploaded_by.id == request.session.id %}
                         <ul>
-                            <li><a href="/anime/{{an.id}}/edit">Edit</a></li>
-                            <li><a href="/anime/{{an.id}}/delete">Delete</a></li>
+                            <li><a href="/anime/{{an.id}}/edit">&#8594;Edit</a></li>
+                            <li><a href="/anime/{{an.id}}/delete">&#8594;Delete</a></li>
                         
                     {%endif%}
                     {% if user_in in an.user_that_fav.all%}
@@ -112,7 +112,7 @@
                         <a href="/anime/{{an.id}}/unfavorite">Remove Like</a></li>
                     {%elif user_in not in an.user_that_fav.all%}
                         <span>||</span>
-                        <li><a href="/anime/{{an.id}}/favorite">Like</a></li>
+                        <li><a href="/anime/{{an.id}}/favorite">&#8594;Like</a></li>
                     {%endif%}
                     </ul>
             </div>
@@ -180,7 +180,7 @@
                 </div>
                 <p>Opening Soon! A Shop Where you will Find Everything As a Fan.</p>
                 <div class="main-button">
-                    <a href="shop.html">Shop Now</a>
+                    <a href="/load_shop">Shop Now</a>
                 </div>
                 </div>
             </div>

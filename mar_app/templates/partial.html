@@ -23,15 +23,17 @@
     </div>
     {%endfor%} -->
     {% for review in oneanime.reviews.all %}
-    <div class="px-4 py-6 bg-white-100 rounded-xl mb-4" style="width: 200px;">
-        <strong>Rating:</strong> {{ review.rating }}/6<br>
-        <strong>Date:</strong> {{ review.created_at|date:"Y-m-d" }}<br>
-        <strong>Comment:</strong><br>
-        {{ review.content }}
-    </div>
-    {% if review.created_by.id == request.session.id %}
-        <a style="color: red; border: 2px solid black;background-color: yellow;" href="/review/delete/{{review.id}}/{{oneanime.id}}">Delete</a>
-    {%endif%}
-{% endfor %}
+            <strong style="margin-left: 4rem;">Added by: {{review.created_by.user_name}}</strong><br>
+                <div style="width: 600px;background-color: white;border-radius: 20%; margin: 0 auto; text-align: center;">
+                    <strong>Rating:</strong> {{ review.rating }}/6<br>
+                    <strong>Date:</strong> {{ review.created_at|date:"Y-m-d" }}<br>
+                    
+                    <strong>Comment:</strong><br>
+                    {{ review.content }}
+                </div>
+                {% if review.created_by.id == request.session.id %}
+                    <a style="margin-left: 30rem;color: red; border: 2px solid black;background-color: yellow;" href="/review/delete/{{review.id}}/{{oneanime.id}}">Delete</a>
+                {%endif%}
+            {% endfor %}
 </body>
 </html>

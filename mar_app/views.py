@@ -96,6 +96,7 @@ def create_anime(request):
             anime1.user_that_fav.add(this_user)
             return redirect ('/success')
         
+
 def show_anime(request,anid):
     if 'id' not in request.session:
         return redirect('/')
@@ -167,3 +168,19 @@ def unfavorite_this(request,anid):
 
 def display_shop(request):
     return render(request,'shop.html')
+
+
+# def create_msg(request):
+#     if request.method =='POST':
+#         errors = CUser.objects.c_basic_validator(request.POST)
+#         if len(errors) > 0:
+#             for key, value in errors.items():
+#                 messages.error(request, value)
+#             return redirect('/load_contact_us_page')
+#         else: 
+#             con1=CUser.new_con(c_fname=request.POST['cfname'],
+#             c_lname=request.POST['clname'],
+#             c_email = request.POST['cemail'],
+#             c_subject = request.POST['csubject'],
+#             c_message = request.POST['cmessage'])
+#             return redirect ('/success')

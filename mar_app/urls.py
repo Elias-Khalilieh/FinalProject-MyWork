@@ -19,5 +19,6 @@ urlpatterns = [
     path('editanime/<int:oneanimeid>',views.edit_anime),
     path('anime/<int:anid>/unfavorite',views.unfavorite_this),
     path('anime/<int:anid>/favorite',views.favorite_this),
-    path('load_shop',views.display_shop)
+    path('load_shop',views.display_shop),
+    # path('submit_msg',views.create_msg),
 ]
